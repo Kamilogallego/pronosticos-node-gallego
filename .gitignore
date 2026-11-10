@@ -1,7 +1,7 @@
 # Dependencias instaladas por npm
 node_modules/
 
-# Reportes generados por las herramientas de prueba
+# Reportes que crean las herramientas de prueba
 coverage/
 
 # Archivos del sistema operativo

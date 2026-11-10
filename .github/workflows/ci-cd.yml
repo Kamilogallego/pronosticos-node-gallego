@@ -46,13 +46,41 @@ jobs:
         run: npm run test:unit
 
   # ---------------------------------------------------------------------------
+  # CI: pruebas BDD
+  # ---------------------------------------------------------------------------
+  # Ejecuta los escenarios escritos en Gherkin (tests/bdd/features). Son pruebas
+  # funcionales: verifican el comportamiento contra el requisito, con frases que
+  # Producción puede leer. Corre en su propia máquina, en paralelo con las pruebas
+  # unitarias: un job no ve lo que instaló otro, por eso repite la preparación.
+  pruebas-bdd:
+    name: Pruebas BDD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v6
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      # jest-cucumber ejecuta cada escenario de los .feature como una prueba de Jest,
+      # con los pasos definidos en los archivos *.steps.js.
+      - name: Ejecutar escenarios BDD
+        run: npm run test:bdd
+
+  # ---------------------------------------------------------------------------
   # CD: despliegue simulado
   # ---------------------------------------------------------------------------
   despliegue:
     name: Despliegue (simulado)
     # needs: el despliegue solo corre si todos los jobs listados terminaron bien.
     # Si una prueba falla, este job no se ejecuta y nada llega a producción.
-    needs: [pruebas-unitarias]
+    needs: [pruebas-unitarias, pruebas-bdd]
     # Solo se despliega lo que entra a main, nunca desde un pull request.
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest

@@ -9,7 +9,7 @@ import js from '@eslint/js';
 import globals from 'globals';
 
 export default [
-  // Carpetas generadas que no se analizan.
+  // Carpetas que crean las herramientas y que no se analizan.
   { ignores: ['node_modules/', 'coverage/'] },
 
   // Reglas recomendadas por ESLint: detectan errores probables.
