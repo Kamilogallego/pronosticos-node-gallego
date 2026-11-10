@@ -1,0 +1,27 @@
+{
+  "name": "pronosticos-node",
+  "version": "1.0.0",
+  "description": "Cálculo de pronósticos de demanda y de sus medidas de error para el curso de Pruebas de Software.",
+  "main": "src/pronosticos.js",
+  "private": true,
+  "scripts": {
+    "start": "node src/server.js",
+    "test:unit": "jest tests/unit",
+    "test:bdd": "jest tests/bdd",
+    "test:cobertura": "jest --coverage",
+    "lint": "eslint ."
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "dependencies": {
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
+    "jest": "^30.5.2",
+    "jest-cucumber": "^4.5.0"
+  }
+}
