@@ -6,17 +6,21 @@
 
 ## 1. Repositorio
 
-https://github.com/USUARIO/pronosticos-node-gallego
+https://github.com/Kamilogallego/pronosticos-node-gallego
 
 ## 2. Capturas del pipeline
 
 **Pipeline en rojo (Paso 7.5: `>=` cambiado por `>` en `debeGenerarAlerta`)**
 
-![Pipeline en rojo](docs/capturas/pipeline-rojo.png)
+Ejecución: https://github.com/Kamilogallego/pronosticos-node-gallego/actions/runs/42951978872 (commit `6a36f80`). Fallan *Pruebas unitarias*, *Pruebas BDD* y *Cobertura*; *Análisis estático* pasa y el *Despliegue (simulado)* queda omitido.
+
+![Pipeline en rojo](docs/capturas/pipeline-rojo.jpg)
 
 **Pipeline en verde (después de `git revert`)**
 
-![Pipeline en verde](docs/capturas/pipeline-verde.png)
+Ejecución: https://github.com/Kamilogallego/pronosticos-node-gallego/actions/runs/42952121336 (commit `d7633f2`). Los cuatro jobs de verificación pasan y el despliegue imprime `Desplegado`.
+
+![Pipeline en verde](docs/capturas/pipeline-verde.jpg)
 
 ## 3. Salida de `npm run test:cobertura`
 
