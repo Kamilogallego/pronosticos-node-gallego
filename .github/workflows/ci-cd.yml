@@ -19,6 +19,29 @@ on:
 
 jobs:
   # ---------------------------------------------------------------------------
+  # CI: análisis estático
+  # ---------------------------------------------------------------------------
+  analisis-estatico:
+    name: Análisis estático
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v6
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      # Revisa errores probables, comparaciones peligrosas y complejidad sin ejecutar el código.
+      - name: Revisar el código con ESLint
+        run: npm run lint
+
+  # ---------------------------------------------------------------------------
   # CI: pruebas unitarias
   # ---------------------------------------------------------------------------
   pruebas-unitarias:
@@ -74,13 +97,38 @@ jobs:
         run: npm run test:bdd
 
   # ---------------------------------------------------------------------------
+  # CI: cobertura de código
+  # ---------------------------------------------------------------------------
+  # Ejecuta todas las pruebas midiendo la cobertura. Si las líneas o las ramas
+  # cubiertas bajan del umbral de jest.config.js (90 %), Jest termina con error
+  # y el job falla.
+  cobertura:
+    name: Cobertura
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v6
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar pruebas con cobertura
+        run: npm run test:cobertura
+
+  # ---------------------------------------------------------------------------
   # CD: despliegue simulado
   # ---------------------------------------------------------------------------
   despliegue:
     name: Despliegue (simulado)
     # needs: el despliegue solo corre si todos los jobs listados terminaron bien.
     # Si una prueba falla, este job no se ejecuta y nada llega a producción.
-    needs: [pruebas-unitarias, pruebas-bdd]
+    needs: [analisis-estatico, pruebas-unitarias, pruebas-bdd, cobertura]
     # Solo se despliega lo que entra a main, nunca desde un pull request.
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
