@@ -64,6 +64,14 @@ function debeGenerarAlerta(errorPorcentual, umbral) {
   return errorPorcentual >= umbral;
 }
 
+function suavizacionExponencial(serie, alfa) {
+  let f = serie[0];
+  for (let i = 1; i < serie.length; i++) {
+    f = f + alfa * (serie[i] - f);
+  }
+  return f;
+}
+
 function validarSeries(real, pronostico) {
   if (real.length !== pronostico.length) {
     throw new Error('Las series deben tener el mismo número de periodos');
@@ -77,4 +85,4 @@ function sumar(valores) {
   return valores.reduce((acumulado, valor) => acumulado + valor, 0);
 }
 
-module.exports = { promedioMovil, mad, mape, debeGenerarAlerta };
+module.exports = { promedioMovil, mad, mape, debeGenerarAlerta, suavizacionExponencial };
