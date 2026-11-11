@@ -40,8 +40,8 @@ defineFeature(feature, (test) => {
     when('calculo el error porcentual del pronóstico', () => {
       try {
         errorPorcentual = mape(real, pronostico);
-      } catch (e) {
-        error = e;
+      } catch (excepcion) {
+        error = excepcion;
       }
     });
   };

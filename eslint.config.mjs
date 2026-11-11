@@ -26,6 +26,9 @@ export default [
       eqeqeq: 'error',
       // Complejidad ciclomática máxima por función (decisiones + 1).
       complexity: ['error', 5],
+      // Regla agregada: los nombres deben tener al menos 2 caracteres, para que digan qué
+      // contienen. Se permite "i" porque es la convención universal para un índice.
+      'id-length': ['error', { min: 2, exceptions: ['i'] }],
     },
   },
 

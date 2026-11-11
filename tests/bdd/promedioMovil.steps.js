@@ -38,8 +38,8 @@ defineFeature(feature, (test) => {
     when(/^calculo el promedio móvil con una ventana de (\d+) periodos$/, (ventana) => {
       try {
         pronostico = promedioMovil(serie, Number(ventana));
-      } catch (e) {
-        error = e;
+      } catch (excepcion) {
+        error = excepcion;
       }
     });
   };
