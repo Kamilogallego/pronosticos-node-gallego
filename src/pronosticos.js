@@ -64,15 +64,24 @@ function debeGenerarAlerta(errorPorcentual, umbral) {
   return errorPorcentual >= umbral;
 }
 
+/**
+ * Pronostica el siguiente periodo con suavización exponencial simple.
+ *
+ * Fórmula: F(t+1) = F(t) + alfa · (D(t) − F(t)), empezando con F(2) = D(1).
+ * Cada pronóstico corrige al anterior en una fracción alfa del error cometido:
+ * con alfa 0 el pronóstico nunca cambia y con alfa 1 es la última demanda real.
+ * Ejemplo: serie [120, 132, 128, 141, 138, 150] y alfa 0.3 → 137.5546.
+ */
 function suavizacionExponencial(serie, alfa) {
   if (alfa < 0 || alfa > 1) {
     throw new Error('Alfa debe estar entre 0 y 1');
   }
-  let f = serie[0];
-  for (let i = 1; i < serie.length; i++) {
-    f = f + alfa * (serie[i] - f);
-  }
-  return f;
+
+  const [primeraDemanda, ...demandasSiguientes] = serie;
+  return demandasSiguientes.reduce(
+    (pronosticoAnterior, demanda) => pronosticoAnterior + alfa * (demanda - pronosticoAnterior),
+    primeraDemanda,
+  );
 }
 
 function validarSeries(real, pronostico) {
