@@ -8,4 +8,12 @@ describe('suavizacionExponencial', () => {
 
     expect(resultado).toBeCloseTo(137.5546, 2);
   });
+
+  test('con alfa 0 el pronóstico nunca cambia y queda en la primera demanda', () => {
+    expect(suavizacionExponencial(SERIE, 0)).toBeCloseTo(120.0, 2);
+  });
+
+  test('con alfa 1 el pronóstico es la última demanda', () => {
+    expect(suavizacionExponencial(SERIE, 1)).toBeCloseTo(150.0, 2);
+  });
 });
