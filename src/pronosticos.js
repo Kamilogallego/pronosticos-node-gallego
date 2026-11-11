@@ -85,6 +85,7 @@ function suavizacionExponencial(serie, alfa) {
 }
 
 function mse(real, pronostico) {
+  validarSeries(real, pronostico);
   let total = 0;
   for (let i = 0; i < real.length; i++) {
     total += (real[i] - pronostico[i]) ** 2;
