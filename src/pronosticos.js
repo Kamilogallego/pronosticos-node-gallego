@@ -65,6 +65,9 @@ function debeGenerarAlerta(errorPorcentual, umbral) {
 }
 
 function suavizacionExponencial(serie, alfa) {
+  if (alfa < 0 || alfa > 1) {
+    throw new Error('Alfa debe estar entre 0 y 1');
+  }
   let f = serie[0];
   for (let i = 1; i < serie.length; i++) {
     f = f + alfa * (serie[i] - f);
