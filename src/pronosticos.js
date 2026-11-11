@@ -61,7 +61,7 @@ function debeGenerarAlerta(errorPorcentual, umbral) {
   if (umbral < 0 || umbral > 100) {
     throw new Error('El umbral debe estar entre 0 y 100');
   }
-  return errorPorcentual >= umbral;
+  return errorPorcentual > umbral;
 }
 
 /**
