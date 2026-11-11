@@ -84,6 +84,14 @@ function suavizacionExponencial(serie, alfa) {
   );
 }
 
+function mse(real, pronostico) {
+  let total = 0;
+  for (let i = 0; i < real.length; i++) {
+    total += (real[i] - pronostico[i]) ** 2;
+  }
+  return total / real.length;
+}
+
 function validarSeries(real, pronostico) {
   if (real.length !== pronostico.length) {
     throw new Error('Las series deben tener el mismo número de periodos');
@@ -97,4 +105,4 @@ function sumar(valores) {
   return valores.reduce((acumulado, valor) => acumulado + valor, 0);
 }
 
-module.exports = { promedioMovil, mad, mape, debeGenerarAlerta, suavizacionExponencial };
+module.exports = { promedioMovil, mad, mape, debeGenerarAlerta, suavizacionExponencial, mse };
