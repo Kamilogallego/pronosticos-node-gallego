@@ -12,13 +12,13 @@ https://github.com/Kamilogallego/pronosticos-node-gallego
 
 **Pipeline en rojo (Paso 7.5: `>=` cambiado por `>` en `debeGenerarAlerta`)**
 
-Ejecución: https://github.com/Kamilogallego/pronosticos-node-gallego/actions/runs/42951978872 (commit `6a36f80`). Fallan *Pruebas unitarias*, *Pruebas BDD* y *Cobertura*; *Análisis estático* pasa y el *Despliegue (simulado)* queda omitido.
+Ejecución: https://github.com/Kamilogallego/pronosticos-node-gallego/actions/runs/42951978872 (commit `a544a52`). Fallan *Pruebas unitarias*, *Pruebas BDD* y *Cobertura*; *Análisis estático* pasa y el *Despliegue (simulado)* queda omitido.
 
 ![Pipeline en rojo](docs/capturas/pipeline-rojo.jpg)
 
 **Pipeline en verde (después de `git revert`)**
 
-Ejecución: https://github.com/Kamilogallego/pronosticos-node-gallego/actions/runs/42952121336 (commit `d7633f2`). Los cuatro jobs de verificación pasan y el despliegue imprime `Desplegado`.
+Ejecución: https://github.com/Kamilogallego/pronosticos-node-gallego/actions/runs/42952121336 (commit `28f999c`). Los cuatro jobs de verificación pasan y el despliegue imprime `Desplegado`.
 
 ![Pipeline en verde](docs/capturas/pipeline-verde.jpg)
 
@@ -80,12 +80,12 @@ La primera prueba fue la del cálculo normal (`calcula el promedio de los errore
 Historial (rojo → verde → refactor):
 
 ```
-d0abb75 test: prueba en rojo para mse
-7420a6f feat: implementa mse
-de8fb7d test: pruebas en rojo para las validaciones de mse
-3448283 feat: valida las series en mse
-a0c629e test: casos adicionales de mse (exacto, error grande y signo)
-21052c8 refactor: mejora la legibilidad de mse
+b9df637 test: prueba en rojo para mse
+40631eb feat: implementa mse
+1bf9bde test: pruebas en rojo para las validaciones de mse
+0da39b8 feat: valida las series en mse
+987e432 test: casos adicionales de mse (exacto, error grande y signo)
+fe4e5ab refactor: mejora la legibilidad de mse
 ```
 
 **143.15 contra 143.22.** La tabla usa los pronósticos ya redondeados a dos decimales (126.67, 133.67, 135.67), y con ellos cada diferencia es 14.33, 4.33 y 14.33: (205.3489 + 18.7489 + 205.3489) / 3 = 143.15. El promedio móvil exacto da 380/3, 401/3 y 407/3 (126.666…, 133.666…, 135.666…), las diferencias son 14.333…, 4.333… y 14.333…, y el MSE da 429.667 / 3 = 143.22. La diferencia aparece porque al elevar al cuadrado, el pequeño error de redondeo también se amplifica.
