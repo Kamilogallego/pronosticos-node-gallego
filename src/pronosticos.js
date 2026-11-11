@@ -84,13 +84,18 @@ function suavizacionExponencial(serie, alfa) {
   );
 }
 
+/**
+ * Error cuadrático medio (MSE): promedio de los cuadrados de las diferencias, en unidades².
+ *
+ * Fórmula: MSE = [(D1 − F1)² + (D2 − F2)² + … + (Dn − Fn)²] / n.
+ * Al elevar al cuadrado, un error grande pesa mucho más que varios pequeños:
+ * Producción lo usa para detectar pronósticos que fallan mucho en pocos periodos.
+ */
 function mse(real, pronostico) {
   validarSeries(real, pronostico);
-  let total = 0;
-  for (let i = 0; i < real.length; i++) {
-    total += (real[i] - pronostico[i]) ** 2;
-  }
-  return total / real.length;
+
+  const erroresCuadrados = real.map((valorReal, i) => (valorReal - pronostico[i]) ** 2);
+  return sumar(erroresCuadrados) / erroresCuadrados.length;
 }
 
 function validarSeries(real, pronostico) {
